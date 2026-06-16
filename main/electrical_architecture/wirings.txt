@@ -1,0 +1,79 @@
+this file gives description of electrical wirings
+
+1. WIRING OF DHT22 (TEMPERATURE & HUMIDITY SENSOR)
+
+
+***ESP32 PINS***
+
+
+***DHT22 PINS***
+VCC
+DATA
+NC
+GND
+
+***CONNECTION***
+VCC  -> 3.3V
+
+DATA -> GPIO4
+
+NC  ->  Nothing
+
+GND  -> GND
+
+DHT22 Pin 1 (VCC)  →  ESP32 3.3V
+DHT22 Pin 2 (DATA) →  ESP32 GPIO 4
+DHT22 Pin 3 (NC)   →  Nothing
+DHT22 Pin 4 (GND)  →  ESP32 GND
+
+****ADD***
+10kΩ resistor
+
+***BETWEEN***
+DATA   AND   VCC
+
+
+
+2. WIRING OF BH1750 (LIGHT SENSOR)
+
+***BH1750 PINS***
+VCC
+GND
+SDA
+SCL
+
+
+***CONNECTION***
+VCC -> 3.3V
+
+GND -> GND
+
+SDA -> GPIO21
+
+SCL -> 
+
+
+
+3. WIRING OF SOIL MOISTURE SENSOR
+
+***CONNECTIONS***
+VCC -> 3.3V
+
+GND -> GND
+
+SDA -> GPIO21
+
+SCL -> GPIO22
+
+NOTE : Do NOT connect the digital output pin. We want analog readings.
+
+
+4. WIRING OF THE RELAY
+
+
+***CONNECTIONS***
+VCC -> 5V
+
+GND -> GND
+
+IN -> GPIO26

@@ -1,0 +1,35 @@
+this file contains the test code of the wiring s
+
+***test code for dht22 sensor***
+
+#include <Arduino.h>
+#include <DHT.h>
+
+#define DHT_PIN     4
+#define DHT_TYPE    DHT22
+
+DHT dht(DHT_PIN, DHT_TYPE);
+
+void setup() {
+    Serial.begin(115200);
+    dht.begin();
+    Serial.println("DHT22 Test Starting...");
+}
+
+void loop() {
+    delay(2000);  // DHT22 needs 2s between readings
+
+    float humidity    = dht.readHumidity();
+    float temperature = dht.readTemperature();  // Celsius
+
+    if (isnan(humidity) || isnan(temperature)) {
+        Serial.println("ERROR: DHT22 read failed. Check wiring.");
+        return;
+    }
+
+    Serial.print("Temperature: ");
+    Serial.print(temperature);
+    Serial.print(" °C    Humidity: ");
+    Serial.print(humidity);
+    Serial.println(" %");
+}
