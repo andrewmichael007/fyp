@@ -13,21 +13,21 @@ NC
 GND
 
 ***CONNECTION***
-VCC  -> 3.3V
 
-DATA -> GPIO4
+DHT22         ->   ESP32
 
-NC  ->  Nothing
+PIN 1(VCC)    ->   3.3V
 
-GND  -> GND
+PIN 2(DATA)   ->   GPIO4
 
-DHT22 Pin 1 (VCC)  →  ESP32 3.3V
-DHT22 Pin 2 (DATA) →  ESP32 GPIO 4
-DHT22 Pin 3 (NC)   →  Nothing
-DHT22 Pin 4 (GND)  →  ESP32 GND
+PIN 3 (NC)    ->   Nothing
+
+PIN 4 (GND)    ->  GND
+
+
 
 ****ADD***
-10kΩ resistor
+10kΩ pull up resistor
 
 ***BETWEEN***
 DATA   AND   VCC
@@ -52,6 +52,11 @@ SDA -> GPIO21
 
 SCL -> 
 
+BH1750 VCC  →  ESP32 3.3V
+BH1750 GND  →  ESP32 GND
+BH1750 SDA  →  ESP32 GPIO 21
+BH1750 SCL  →  ESP32 GPIO 22
+BH1750 ADD  →  ESP32 GND (sets I2C address to 0x23)
 
 
 3. WIRING OF SOIL MOISTURE SENSOR
