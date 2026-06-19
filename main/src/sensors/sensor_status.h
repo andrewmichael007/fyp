@@ -1,0 +1,13 @@
+#ifndef SENSOR_STATUS_H
+#define SENSOR_STATUS_H
+
+enum class SensorStatus
+{
+    OK,
+    DHT_TEMPERATURE_ERROR,
+    DHT_HUMIDITY_ERROR,
+    LIGHT_SENSOR_ERROR,
+    SOIL_MOISTURE_SENSOR_ERROR
+};
+
+#endif
