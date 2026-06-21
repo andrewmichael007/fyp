@@ -1,13 +1,16 @@
-// this determines what the irrigation can do
+// this file indicates which irrigation decisions can take place
 
-// basically it can irrigate, or not irrigate.
+// there are three irrigation decisions
+// 1. critical irrigation - Soil moisture dangerously low.
+// 2. context irrigation - Environmental conditions suggest water stress is likely.
 
 #ifndef IRRIGATION_DECISION_H
 #define IRRIGATION_DECISION_H
 
 enum class IrrigationDecision
 {
-    IRRIGATE,
+    CRITICAL_IRRIGATION,
+    CONTEXT_IRRIGATION,
     DO_NOT_IRRIGATE
 };
 
