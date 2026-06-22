@@ -1,6 +1,7 @@
 // this file indicates which irrigation decisions can take place
 
 // there are three irrigation decisions
+
 // 1. critical irrigation - Soil moisture dangerously low.
 // 2. context irrigation - Environmental conditions suggest water stress is likely.
 
