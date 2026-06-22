@@ -1,8 +1,8 @@
 //this source file shows how the actions of the relay controller would be carried out
-
-#include "relay_controller.h"
 #include <Arduino.h>
+#include "relay_controller.h"
 
+//defining the relay pin and valve pin
 #define PUMP_RELAY_PIN 26
 #define VALVE_RELAY_PIN 27
 
