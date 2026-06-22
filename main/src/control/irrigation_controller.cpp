@@ -1,24 +1,49 @@
 #include "irrigation_controller.h"
+#include "../../include/config.h"
 
-IrrigationDecision IrrigationController::evaluate( const SensorData& data)
+IrrigationProfile IrrigationController::evaluate(const SensorData& data)
 {
+    //create an object call profile
+    IrrigationProfile profile;
+
+    // default
+    profile.decision = IrrigationDecision::DO_NOT_IRRIGATE;
+
+    profile.shouldIrrigate = false;
+
+    profile.durationMs = 0;
+
     // priority 1:
-    // emergency protection
+    // critical  moisture
 
     if(data.soilMoisture < 15)
     {
-        return IrrigationDecision::CRITICAL_IRRIGATION;
+        profile.decision = IrrigationDecision::CRITICAL_IRRIGATION;
+
+        profile.shouldIrrigate = true;
+
+        profile.durationMs = CRITICAL_IRRIGATION_DURATION_MS;
+
+        return profile;
     }
 
     // priority 2:
-    // context-aware irrigation
+    // context-aware rule
 
-    if(data.soilMoisture < 30 &&
-       data.temperature > 30 &&
-       data.humidity < 50)
+    if(
+        data.soilMoisture < 30 &&
+        data.temperature > 30 &&
+        data.humidity < 50
+    )
     {
-        return IrrigationDecision::CONTEXT_IRRIGATION;
+        profile.decision = IrrigationDecision::CONTEXT_IRRIGATION;
+
+        profile.shouldIrrigate = true;
+
+        profile.durationMs = CONTEXT_IRRIGATION_DURATION_MS;
+
+        return profile;
     }
 
-    return IrrigationDecision::DO_NOT_IRRIGATE;
+    return profile;
 }
