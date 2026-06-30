@@ -1,25 +1,85 @@
+//this piece of code changes the format of the data output log
+//into human readable and machine readable format
+
+//...output instance
+// 1520,32.4,42.1,18,950,CONTEXT_IRRIGATION,MONITORING
+
 #include <Arduino.h>
 #include "data_logger.h"
 
-void DataLogger::log(
-    const SensorData& data,
-    IrrigationDecision decision,
-    SystemState state
-)
+//implementation of decision to string
+const char*
+DataLogger::decisionToString(
+    IrrigationDecision decision)
 {
-    Serial.print(millis());
+    switch(decision)
+    {
+        case IrrigationDecision::CRITICAL_IRRIGATION:
+            return "CRITICAL_IRRIGATION";
 
-    Serial.print(",");
-    Serial.print(data.temperature);
+        case IrrigationDecision::CONTEXT_IRRIGATION:
+            return "CONTEXT_IRRIGATION";
 
-    Serial.print(",");
-    Serial.print(data.humidity);
+        case IrrigationDecision::DO_NOT_IRRIGATE:
+            return "DO_NOT_IRRIGATE";
+    }
 
-    Serial.print(",");
-    Serial.print(data.soilMoisture);
+    return "UNKNOWN";
+}
 
-    Serial.print(",");
-    Serial.print(data.lightIntensity);
+//state to string
+const char*
+DataLogger::stateToString(
+    SystemState state)
+{
+    switch(state)
+    {
+        case SystemState::MONITORING:
+            return "MONITORING";
 
-    Serial.println();
+        case SystemState::IRRIGATING:
+            return "IRRIGATING";
+
+        case SystemState::SETTLING:
+            return "SETTLING";
+
+        case SystemState::FAULT:
+            return "FAULT";
+    }
+
+    return "UNKNOWN";
+}
+
+//complete building of csv file
+//appending the timestamp, sensor data, decision and state
+String
+DataLogger::buildCSV(
+    const LogRecord& record)
+{
+    String csv;
+
+    csv += String(record.timestamp);
+    csv += ",";
+
+    csv += String(record.sensorData.temperature);
+    csv += ",";
+
+    csv += String(record.sensorData.humidity);
+    csv += ",";
+
+    csv += String(record.sensorData.soilMoisture);
+    csv += ",";
+
+    csv += String(record.sensorData.lightIntensity);
+    csv += ",";
+
+    csv += decisionToString(
+        record.decision);
+
+    csv += ",";
+
+    csv += stateToString(
+        record.state);
+
+    return csv;
 }
