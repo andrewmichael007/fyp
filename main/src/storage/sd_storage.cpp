@@ -16,58 +16,105 @@ bool SDStorage::begin()
     return createDatasetFile();
 }
 
+//creating the dataset file
 
-
-
-
-
-
-
-
-
-
-
-
-//main implementation of the sd card storage
-#include "sd_storage.h"
-
-#include <Arduino.h>
-#include <SPI.h>  //required for sd card communication
-#include <SD.h> //sd card library
-
-#define SD_CS_PIN 5
-
-//initializing SD card storage
-bool SDStorage::begin()
+bool SDStorage::createDatasetFile()
 {
-    if(!SD.begin(SD_CS_PIN))
+    //first check if dataset already exists
+    if (SD.exists("/dataset.csv"))
+    {
+        return true;
+    }
+
+    //if dataset doesn't exist, open file
+    File file = SD.open("/dataset.csv", FILE_WRITE);
+
+    //if opening the dataset file doesn't exist
+    if (!file)
     {
         return false;
     }
 
-    return true;
-}
+    //if the dataset file exists, write the below parameters to the file
+    file.println(
+        "timestamp,"
+        "temperature,"
+        "humidity,"
+        "soil_moisture,"
+        "light,"
+        "decision,"
+        "state"
+    );
 
-bool SDStorage::append(
-    const char* data)
-{
-    //create an object called file from the file class
-    //sd.open(filename, mode)
-    File file = SD.open("/dataset.csv", O_APPEND);
-
-    //if no file exists return false
-    if(!file)
-    {
-        return false;
-    }
-
-    //if file exists, print data and close file
-    file.println(data);
-
+    //close the file
     file.close();
 
     return true;
 }
+
+//appending new records
+bool SDStorage::append(
+    const char* data)
+{
+    //creating a file object
+    File file = SD.open("/dataset.csv", FILE_APPEND);
+
+    //file check
+    if (!file)
+    {
+        return false;
+    }
+
+    //if file exists, print the data
+    file.println(data);
+
+    //close file
+    file.close();
+
+    return true;
+}
+
+
+// //main implementation of the sd card storage
+// #include "sd_storage.h"
+
+// #include <Arduino.h>
+// #include <SPI.h>  //required for sd card communication
+// #include <SD.h> //sd card library
+
+// #define SD_CS_PIN 5
+
+// //initializing SD card storage
+// bool SDStorage::begin()
+// {
+//     if(!SD.begin(SD_CS_PIN))
+//     {
+//         return false;
+//     }
+
+//     return true;
+// }
+
+// bool SDStorage::append(
+//     const char* data)
+// {
+//     //create an object called file from the file class
+//     //sd.open(filename, mode)
+//     File file = SD.open("/dataset.csv", O_APPEND);
+
+//     //if no file exists return false
+//     if(!file)
+//     {
+//         return false;
+//     }
+
+//     //if file exists, print data and close file
+//     file.println(data);
+
+//     file.close();
+
+//     return true;
+// }
 
 
 //NOTES
